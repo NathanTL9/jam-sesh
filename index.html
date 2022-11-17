@@ -119,6 +119,7 @@
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668646650319"
       ></audio>
     </div>
+    <script src="piano.js"></script>
     <script>
       //init socket
       var socket = io();
@@ -129,7 +130,7 @@
       //when a text is recieved...
       socket.on("key", (d) => {
         console.log("recieving: " + d.key);
-        
+
         if (d.whiteKeyIndex > -1) playNote(whiteKeys[d.whiteKeyIndex]);
         if (d.blackKeyIndex > -1) playNote(blackKeys[d.blackKeyIndex]);
       });
