@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
     //forward data
     socket.on('key', (msg) => {
         console.log(msg);
-        io.emit("key", msg);
+        socket.broadcast.emit("key", msg);
     });
     
     socket.on('disconnect', () => {

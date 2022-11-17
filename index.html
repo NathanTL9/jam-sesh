@@ -141,12 +141,10 @@
         console.log("recieving: " + d.key);
 
         if (d.whiteKeyIndex > -1) {
-          playNote(whiteKeys[d.whiteKeyIndex]);
-          whiteKeys[d.whiteKeyIndex].classList.add("other");
+          otherNote(whiteKeys[d.whiteKeyIndex]);
         }
         if (d.blackKeyIndex > -1) {
-          blackKeys[d.blackKeyIndex].classList.add("other");
-          playNote(blackKeys[d.blackKeyIndex]);
+          otherNote(blackKeys[d.blackKeyIndex]);
         }
       });
 
@@ -174,6 +172,12 @@
         };
         socket.emit("key", data);
         console.log("sending: " + key);
+        if (whiteKeyIndex > -1) {
+          playNote(whiteKeys[whiteKeyIndex]);
+        }
+        if (blackKeyIndex > -1) {
+          playNote(blackKeys[blackKeyIndex]);
+        }
       });
 
       document
@@ -205,6 +209,15 @@
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
           key.classList.remove("active");
+        });
+      }
+
+      function otherNote(key) {
+        const noteAudio = document.getElementById(key.dataset.note);
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+        key.classList.add("other");
+        noteAudio.addEventListener("ended", () => {
           key.classList.remove("other");
         });
       }
