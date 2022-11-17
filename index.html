@@ -234,9 +234,8 @@
           if (recordedNotes[currentNote].blackKeyIndex > -1) {
             playNote(blackKeys[recordedNotes[currentNote].blackKeyIndex]);
           }
-          playNote();
           currentNote++;
-          if (currentNote > recordedNotes.length) {
+          if (currentNote >= recordedNotes.length) {
             currentNote = 0;
           }
           await sleep(500);
