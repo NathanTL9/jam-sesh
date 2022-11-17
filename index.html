@@ -161,15 +161,16 @@
         const whiteKeyIndex = WHITE_KEYS.indexOf(key);
         const blackKeyIndex = BLACK_KEYS.indexOf(key);
 
-        if (recording) {
-          recordedNotes.push(key);
-        }
-
         var data = {
           key: key,
           whiteKeyIndex: whiteKeyIndex,
           blackKeyIndex: blackKeyIndex,
         };
+        
+        if (recording) {
+          recordedNotes.push(data);
+        }
+        
         socket.emit("key", data);
         console.log("sending: " + key);
         if (whiteKeyIndex > -1) {
@@ -227,9 +228,15 @@
         //myWorker.postMessage(recordedNotes);
         let currentNote = 0;
         while (playingRecording) {
-          playNote(recordedNotes[currentNote]);
+          if (recordedNotes[currentNote].whiteKeyIndex > -1) {
+            playNote(whiteKeys[recordedNotes[currentNote].whiteKeyIndex]);
+          }
+          if (recordedNotes[currentNote].blackKeyIndex > -1) {
+            playNote(blackKeys[recordedNotes[currentNote].blackKeyIndex]);
+          }
+          playNote();
           currentNote++;
-          if (currentNote > recordedNotes.length {
+          if (currentNote > recordedNotes.length) {
             currentNote = 0;
           }
           await sleep(500);
