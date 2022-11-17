@@ -41,8 +41,8 @@ io.on('connection', (socket) => {
 
   
     //forward data
-    socket.on('data', (msg) => {
-        io.emit("data", msg);
+    socket.on('key', (msg) => {
+        io.emit("key", msg);
     });
 
 

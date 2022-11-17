@@ -121,6 +121,15 @@
       ></audio>
     </div>
     <script>
+      //init socket
+      var socket = io();
+
+      //connect to your server address
+      socket.connect("https://collaborative-piano.glitch.me/:3000");
+
+      //when a text is recieved...
+      socket.on("data", (d) => {});
+
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
       const BLACK_KEYS = ["s", "d", "g", "h", "j"];
 
@@ -137,7 +146,8 @@
         const key = e.key;
         const whiteKeyIndex = WHITE_KEYS.indexOf(key);
         const blackKeyIndex = BLACK_KEYS.indexOf(key);
-
+        socket.emit('key',key)
+        console.log('sending: ' + key);
         if (whiteKeyIndex > -1) playNote(whiteKeys[whiteKeyIndex]);
         if (blackKeyIndex > -1) playNote(blackKeys[blackKeyIndex]);
       });
@@ -172,15 +182,6 @@
           img: student,
         };
       }
-
-      //init socket
-      var socket = io();
-
-      //connect to your server address
-      socket.connect("https://collaborative-piano.glitch.me/:3000");
-
-      //when a text is recieved...
-      socket.on("data", (d) => {});
     </script>
   </body>
 </html>
