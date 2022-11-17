@@ -222,9 +222,22 @@
         });
       }
 
-      function playRecording() {
-        const myWorker = new Worker("looper.js");
+      async function playRecording() {
+        //const myWorker = new Worker("looper.js");
         //myWorker.postMessage(recordedNotes);
+        let currentNote = 0;
+        while (playingRecording) {
+          playNote(recordedNotes[currentNote]);
+          currentNote++;
+          if (currentNote > recordedNotes.length {
+            currentNote = 0;
+          }
+          await sleep(500);
+        }
+      }
+        
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
       }
 
       const student =
