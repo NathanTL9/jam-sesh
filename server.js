@@ -29,6 +29,13 @@ app.get('/instructor', (req, res) => {              //user = gura
     res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/snare', (req, res) => {              //user = snare
+    res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/tambourine', (req, res) => {              //user = tambourine
+    res.sendFile(__dirname + '/index.html');
+});
 
 // connect the server to port 3000
 http.listen(3000, () => {
