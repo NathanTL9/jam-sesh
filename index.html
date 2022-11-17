@@ -54,6 +54,8 @@
   </head>
 
   <body>
+    <button id="record-button">Record: off</button>
+    <button id="record-play">Play</button>
     <div id="main" class="main">
       <div class="piano">
         <div data-note="C" class="key white"></div>
@@ -146,6 +148,10 @@
         const key = e.key;
         const whiteKeyIndex = WHITE_KEYS.indexOf(key);
         const blackKeyIndex = BLACK_KEYS.indexOf(key);
+        
+        if (recording) {
+          recordedNotes.push(key);
+        }
 
         var data = {
           key: key,
@@ -154,6 +160,25 @@
         };
         socket.emit("key", data);
         console.log("sending: " + key);
+      });
+      
+      document.getElementById("record-button").addEventListener("click", (e) => {
+        if (recording) {
+          document.getElementById("record-button").innerHTML = "Record: off";
+        } else {
+          document.getElementById("record-button").innerHTML = "Record: on";
+        }
+        recording = !recording;
+      });
+      
+      document.getElementById("record-play").addEventListener("click", (e) => {
+        if (playingRecording) {
+          document.getElementById("record-play").innerHTML = "Play";
+          playingRecording = !playingRecording;
+        } else {
+          document.getElementById("record-play").innerHTML = "Pause";
+          playingRecording = !playingRecording;
+        }
       });
 
       function playNote(key) {
@@ -165,6 +190,12 @@
           key.classList.remove("active");
         });
       }
+      
+      function playRecording() {
+        while (playingRecording) {
+          console.log(recordedNotes);
+        }
+      }
 
       const student =
         "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995";
@@ -175,7 +206,9 @@
       var me;
       var address = window.location.href;
       var who = address.substring(address.lastIndexOf("/") + 1);
-      var recording = [];
+      var recordedNotes = [];
+      var playingRecording = false;
+      var recording = false;
       if (who === "instructor") {
         me = {
           id: "instructor",
