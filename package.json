@@ -1,20 +1,22 @@
 {
-  "name": "glitch-hello-node",
-  "version": "0.1.0",
-  "description": "A simple Node app built on fastify, instantly up and running. Built to be remixed on Glitch.com.",
+  "name": "hello-node",
+  "version": "0.0.1",
+  "description": "A simple Node app built on fastify, instantly up and running.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "fastify": "^4.9.2",
+    "express": "^4.18.2",
+    "fastify": "^4.10.0",
+    "fastify-formbody": "^5.3.0",
+    "fastify-static": "^4.7.0",
     "handlebars": "^4.7.7",
-    "@fastify/formbody": "^7.3.0",
-    "@fastify/static": "^6.5.0",
-    "@fastify/view": "^7.1.2"
+    "point-of-view": "^6.3.0",
+    "socket.io": "^4.5.3"
   },
   "engines": {
-    "node": "14.x"
+    "node": "12.x"
   },
   "repository": {
     "url": "https://glitch.com/edit/#!/glitch-hello-node"
@@ -22,6 +24,7 @@
   "license": "MIT",
   "keywords": [
     "node",
-    "glitch"
+    "glitch",
+    "express"
   ]
 }

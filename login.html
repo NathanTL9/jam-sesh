@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+  
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
+    <style>
+      body {
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 0 20px;
+      }
+
+      .container {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+      }
+
+      .container::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      .container img {
+        float: left;
+        max-width: 60px;
+        width: 100%;
+        margin-right: 20px;
+        border-radius: 50%;
+      }
+
+      .container img.right {
+        float: right;
+        margin-left: 20px;
+        margin-right:0;
+      }
+
+      </style>
+    
+    
+    
+  </head>
+  
+  <body>
+    
+    
+    
+      <div id="main" class="main">
+        
+        <!-- button to login as ame -->
+        <a href="https://581-chat-example.glitch.me/ame">
+        <div id="ame" class="container">
+          <img src="https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995" alt="Avatar">
+          <p>Login as Ame</p>
+        </div>
+        </a>
+
+        <!-- button to login as gura -->
+        <a href="https://581-chat-example.glitch.me/gura">
+        <div id="gura" class="container">
+          <img src="https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357" alt="Avatar" class="left">
+          <p>Login as Gura</p>
+        </div>
+        </a>
+        
+      </div>  
+  
+
+  </body>
+  
+</html>
+
+
