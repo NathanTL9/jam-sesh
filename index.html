@@ -50,6 +50,14 @@
       .black.active {
         background-color: #333;
       }
+
+      .white.other {
+        background-color: red;
+      }
+
+      .black.other {
+        background-color: red;
+      }
     </style>
   </head>
 
@@ -132,8 +140,14 @@
       socket.on("key", (d) => {
         console.log("recieving: " + d.key);
 
-        if (d.whiteKeyIndex > -1) playNote(whiteKeys[d.whiteKeyIndex]);
-        if (d.blackKeyIndex > -1) playNote(blackKeys[d.blackKeyIndex]);
+        if (d.whiteKeyIndex > -1) {
+          playNote(whiteKeys[d.whiteKeyIndex]);
+          whiteKeys[d.whiteKeyIndex].classList.add("other");
+        }
+        if (d.blackKeyIndex > -1) {
+          blackKeys[d.blackKeyIndex].classList.add("other");
+          playNote(blackKeys[d.blackKeyIndex]);
+        }
       });
 
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
@@ -148,7 +162,7 @@
         const key = e.key;
         const whiteKeyIndex = WHITE_KEYS.indexOf(key);
         const blackKeyIndex = BLACK_KEYS.indexOf(key);
-        
+
         if (recording) {
           recordedNotes.push(key);
         }
@@ -161,16 +175,18 @@
         socket.emit("key", data);
         console.log("sending: " + key);
       });
-      
-      document.getElementById("record-button").addEventListener("click", (e) => {
-        if (recording) {
-          document.getElementById("record-button").innerHTML = "Record: off";
-        } else {
-          document.getElementById("record-button").innerHTML = "Record: on";
-        }
-        recording = !recording;
-      });
-      
+
+      document
+        .getElementById("record-button")
+        .addEventListener("click", (e) => {
+          if (recording) {
+            document.getElementById("record-button").innerHTML = "Record: off";
+          } else {
+            document.getElementById("record-button").innerHTML = "Record: on";
+          }
+          recording = !recording;
+        });
+
       document.getElementById("record-play").addEventListener("click", (e) => {
         if (playingRecording) {
           document.getElementById("record-play").innerHTML = "Play";
@@ -189,11 +205,12 @@
         key.classList.add("active");
         noteAudio.addEventListener("ended", () => {
           key.classList.remove("active");
+          key.classList.remove("other");
         });
       }
-      
+
       function playRecording() {
-        const myWorker = new Worker("/app/looper.js");
+        const myWorker = new Worker("looper.js");
         //myWorker.postMessage(recordedNotes);
       }
 
