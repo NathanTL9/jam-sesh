@@ -5,181 +5,115 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
     <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
       body {
-        margin: 0 auto;
-        max-width: 800px;
-        padding: 0 20px;
+        background-color: #143f6b;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
-      .container {
-        border: 2px solid #dedede;
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 10px 0;
+      .piano {
+        display: flex;
       }
 
-      .darker {
-        border-color: #ccc;
-        background-color: #ddd;
+      .key {
+        height: calc(var(--width) * 4);
+        width: var(--width);
       }
 
-      .container::after {
-        content: "";
-        clear: both;
-        display: table;
+      .white {
+        --width: 100px;
+        background-color: white;
+        border: 1px solid #333;
       }
 
-      .container img {
-        float: left;
-        max-width: 60px;
-        width: 100%;
-        margin-right: 20px;
-        border-radius: 50%;
+      .white.active {
+        background-color: #ccc;
       }
 
-      .container img.right {
-        float: right;
-        margin-left: 20px;
-        margin-right: 0;
+      .black {
+        --width: 60px;
+        background-color: black;
+        margin-left: calc(var(--width) / -2);
+        margin-right: calc(var(--width) / -2);
+        z-index: 2;
       }
 
-      .time-right {
-        float: right;
-        color: #aaa;
-      }
-
-      .time-left {
-        float: left;
-        color: #999;
-      }
-
-      .chatbox {
-        height: 40px;
-        position: fixed;
-        bottom: 2%;
-        width: 100%;
-        background-color: #FEFEFF;
-        opacity: 1;
-      }
-
-      .main {
-        width: 450px;
-        max-height: 85vh;
-        overflow: auto;
+      .black.active {
+        background-color: #333;
       }
     </style>
   </head>
 
   <body>
-    <div id="main" class="main"></div>
+    <div id="main" class="main">
+      <div class="piano">
+        <div data-note="C" class="key white"></div>
+        <div data-note="Db" class="key black"></div>
+        <div data-note="D" class="key white"></div>
+        <div data-note="Eb" class="key black"></div>
+        <div data-note="E" class="key white"></div>
+        <div data-note="F" class="key white"></div>
+        <div data-note="Gb" class="key black"></div>
+        <div data-note="G" class="key white"></div>
+        <div data-note="Ab" class="key black"></div>
+        <div data-note="A" class="key white"></div>
+        <div data-note="Bb" class="key black"></div>
+        <div data-note="B" class="key white"></div>
+      </div>
 
-    <input class="chatbox" type="text" id="chatbox" name="chatbox" />
-
+      <audio id="C" src="notes/C.mp3"></audio>
+      <audio id="Db" src="notes/Db.mp3"></audio>
+      <audio id="D" src="notes/D.mp3"></audio>
+      <audio id="Eb" src="notes/Eb.mp3"></audio>
+      <audio id="E" src="notes/E.mp3"></audio>
+      <audio id="F" src="notes/F.mp3"></audio>
+      <audio id="Gb" src="notes/Gb.mp3"></audio>
+      <audio id="G" src="notes/G.mp3"></audio>
+      <audio id="Ab" src="notes/Ab.mp3"></audio>
+      <audio id="A" src="notes/A.mp3"></audio>
+      <audio id="Bb" src="notes/Bb.mp3"></audio>
+      <audio id="B" src="notes/B.mp3"></audio>
+    </div>
     <script>
-      //address for profile images 
-      const ame = "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995";
-      const gura = "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
-      
-      
+      //address for profile images
+      const student =
+        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995";
+      const instructor =
+        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
+
       //figure out who this client is, this is for styling in the chatting application
-      var me; 
-      var address = window.location.href; 
-      var who = address.substring(address.lastIndexOf("/") + 1); 
-      if (who === 'gura'){
+      var me;
+      var address = window.location.href;
+      var who = address.substring(address.lastIndexOf("/") + 1);
+      if (who === "instructor") {
         me = {
-          id:'gura',
-          img:gura
-        }
-      }
-      else{
+          id: "instructor",
+          img: instructor,
+        };
+      } else {
         me = {
-          id:'ame',
-          img:ame
-        }
+          id: "student",
+          img: student,
+        };
       }
-      
 
-      //init socket 
+      //init socket
       var socket = io();
-      
-      //connect to your server address 
-      socket.connect("https://581-chat-example.glitch.me/:3000"); 
-      
-      //when a text is recieved... 
-      socket.on("data", d => {
-        
-        
-        //create the chat bubble, which is just a div in this case
-        var bubble = document.createElement('div');
-        
 
-        //creaete an icon
-        var icon = document.createElement('img');
-      
+      //connect to your server address
+      socket.connect("https://collaborative-piano.glitch.me/:3000");
 
-
-        //create the text
-        var text = document.createElement('p');
-        text.innerHTML = d.msg;
-
-
-        //create a timestamp
-        var timestamp = document.createElement('span'); 
-        var today = new Date();
-        var time = today.getHours() + ":" + today.getMinutes(); 
-        timestamp.innerHTML = time; 
-
-        
-        //assign different css classes that we define above to the chat bubble based on who the message is from 
-        if (me.id === d.user.id){  
-          bubble.className = "container darker"; 
-          icon.src = d.user.img;
-          icon.className = "right";
-          timestamp.className = "time-left";
-        }
-        else{   
-          bubble.className = "container"; 
-          icon.src = d.user.img;
-          icon.className = "left";
-          timestamp.className = "time-right"
-        }
-        
-
-        //put everything we created into the bubble (div)
-        bubble.append(icon);
-        bubble.append(text);
-        bubble.append(timestamp);
-        
-        //append bubble to the main application 
-        var main = document.getElementById("main")
-        main.append(bubble);
-        main.scrollTop = main.scrollHeight; 
-        
-        
-      });
-
-      //reference to text box input
-      var chatbox = document.getElementById("chatbox");
-
-      //handles sending text when enter is pressed
-      chatbox.addEventListener("keydown", event => {
-        if (event.code == "Enter" && chatbox.value != "") {
-          
-          //create JSON data to be sent. this data contains who the user is, and the text string 
-          var data = {
-      
-              user:me, 
-              msg:chatbox.value 
-            
-          }
-          
-          //send the data and clear textbox 
-          socket.emit("data", data)
-          chatbox.value = ""; 
-    
-        }
-      });
+      //when a text is recieved...
+      socket.on("data", (d) => {});
     </script>
   </body>
 </html>
