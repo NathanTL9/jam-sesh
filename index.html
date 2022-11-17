@@ -193,9 +193,8 @@
       }
       
       function playRecording() {
-        while (playingRecording) {
-          console.log(recordedNotes);
-        }
+        const myWorker = new Worker("/app/looper.js");
+        //myWorker.postMessage(recordedNotes);
       }
 
       const student =
