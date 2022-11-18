@@ -140,9 +140,44 @@
           key: key,
         };
         if (key == "a") {
+          if (recording) {
+            if (!firstNote) {
+              recordedTimes.push(Date.now() - lastTime);
+              console.log("Time: " + (Date.now() - lastTime));
+            } else {
+              firstNote = false;
+            }
+            lastTime = Date.now();
+          }
+          
           playTambourine();
           socket.emit("tambourine", data);
           console.log("sending: " + key);
+        }
+      });
+      
+      document
+        .getElementById("record-button")
+        .addEventListener("click", (e) => {
+          if (recording) {
+            document.getElementById("record-button").innerHTML = "Record: off";
+            recordedTimes.push(Date.now() - lastTime);
+          } else {
+            document.getElementById("record-button").innerHTML = "Record: on";
+            recordedTimes = [];
+            firstNote = true;
+          }
+          recording = !recording;
+        });
+
+      document.getElementById("record-play").addEventListener("click", (e) => {
+        if (playingRecording) {
+          document.getElementById("record-play").innerHTML = "Play";
+          playingRecording = !playingRecording;
+        } else {
+          document.getElementById("record-play").innerHTML = "Pause";
+          playingRecording = !playingRecording;
+          playRecording();
         }
       });
 
@@ -150,6 +185,27 @@
         const noteAudio = document.getElementById("tambourine_sound");
         noteAudio.currentTime = 0;
         noteAudio.play();
+      }
+      
+      async function playRecording() {
+        let currentNote = 0;
+        while (playingRecording) {
+          if (
+            currentNote < recordedTimes.length &&
+            !(recordedTimes.length === 0)
+          ) {
+            socket.emit("tambourine", "a");
+            playTambourine();
+            currentNote++;
+          } else {
+            currentNote = 0;
+          }
+          await sleep(recordedTimes[currentNote]);
+        }
+      }
+      
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
       }
 
       //when a text is recieved...
@@ -183,8 +239,10 @@
       var address = window.location.href;
       var who = address.substring(address.lastIndexOf("/") + 1);
       var recordedNotes = [];
+      var firstNote = true;
       var playingRecording = false;
       var recording = false;
+      var lastTime = Date.now();
 
       if (who === "piano") {
         console.log("piano");
