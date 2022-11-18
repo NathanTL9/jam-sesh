@@ -278,26 +278,44 @@
 
       async function playRecording() {
         let currentNote = 0;
+        let snareNote = 0;
+        let tambourineNote = 0;
         while (playingRecording) {
-          if (currentNote >= recordedNotes.length) {
+          if (
+            currentNote <= recordedNotes.length &&
+            !(recordedNotes.length === 0)
+          ) {
+            if (recordedNotes[currentNote].whiteKeyIndex > -1) {
+              playNote(whiteKeys[recordedNotes[currentNote].whiteKeyIndex]);
+            }
+            if (recordedNotes[currentNote].blackKeyIndex > -1) {
+              playNote(blackKeys[recordedNotes[currentNote].blackKeyIndex]);
+            }
+            currentNote++;
+          } else {
             currentNote = 0;
           }
-          if (recordedNotes[currentNote].whiteKeyIndex > -1) {
-            playNote(whiteKeys[recordedNotes[currentNote].whiteKeyIndex]);
+          if (
+            tambourineNote <= recordedTambourine.length &&
+            !(recordedTambourine.length === 0)
+          ) {
+            if (recordedTambourine[currentNote].key == "a") {
+              playTambourine();
+              tambourineNote++;
+            }
+          } else {
+            tambourineNote = 0;
           }
-          if (recordedNotes[currentNote].blackKeyIndex > -1) {
-            playNote(blackKeys[recordedNotes[currentNote].blackKeyIndex]);
-          }
-          if (recordedTambourine[currentNote].key == "a") {
-            playTambourine();
-          }
-          if (recordedSnare[currentNote].key == "l") {
-            playSnare();
-          }
-
-          currentNote++;
-          if (currentNote >= recordedNotes.length) {
-            currentNote = 0;
+          if (
+            snareNote <= recordedSnare.length &&
+            !(recordedSnare.length === 0)
+          ) {
+            if (recordedSnare[currentNote].key == "l") {
+              playSnare();
+              snareNote++;
+            }
+          } else {
+            snareNote = 0;
           }
           await sleep(recordedTimes[currentNote]);
         }
