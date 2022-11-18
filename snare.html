@@ -143,9 +143,44 @@
           key: key,
         };
         if (key == "l") {
+          if (recording) {
+            if (recordedTimes.length > 0) {
+              recordedTimes.push(Date.now() - lastTime);
+              console.log("Time: " + (Date.now() - lastTime));
+            }
+            lastTime = Date.now();
+            recordedTimes.push(Date.now() - lastTime);
+          }
+          
           playSnare();
           socket.emit("snare", data);
           console.log("sending: " + key);
+        }
+      });
+      
+            document
+        .getElementById("record-button")
+        .addEventListener("click", (e) => {
+          if (recording) {
+            document.getElementById("record-button").innerHTML = "Record: off";
+            recordedTimes.push(Date.now() - lastTime);
+          } else {
+            document.getElementById("record-button").innerHTML = "Record: on";
+            recordedTimes = [];
+          }
+          recording = !recording;
+        });
+
+      document.getElementById("record-play").addEventListener("click", (e) => {
+        if (playingRecording) {
+          document.getElementById("record-play").innerHTML = "Play";
+          playingRecording = !playingRecording;
+        } else {
+          document.getElementById("record-play").innerHTML = "Pause";
+          playingRecording = !playingRecording;
+          playRecording();
+          playRecordingSnare();
+          playRecordingTambourine();
         }
       });
 
@@ -153,6 +188,23 @@
         const noteAudio = document.getElementById("snare_sound");
         noteAudio.currentTime = 0;
         noteAudio.play();
+      }
+      
+            async function playRecording() {
+        let currentNote = 0;
+        while (playingRecording) {
+          if (
+            currentNote < recordedTimes.length &&
+            !(recordedTimes.length === 0)
+          ) {
+            socket.emit("snare", data);
+            playSnare();
+            currentNote++;
+          } else {
+            currentNote = 0;
+          }
+          await sleep(recordedTimes[currentNote]);
+        }
       }
 
       //when a text is recieved...
@@ -185,7 +237,7 @@
       var me;
       var address = window.location.href;
       var who = address.substring(address.lastIndexOf("/") + 1);
-      var recordedNotes = [];
+      var recordedTimes = [];
       var playingRecording = false;
       var recording = false;
 
