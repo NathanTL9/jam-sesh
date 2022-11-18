@@ -291,6 +291,7 @@
             currentNote < recordedNotes.length &&
             !(recordedNotes.length === 0)
           ) {
+            socket.emit("key", recordedNotes[currentNote]);
             if (recordedNotes[currentNote].whiteKeyIndex > -1) {
               playNote(whiteKeys[recordedNotes[currentNote].whiteKeyIndex]);
             }
