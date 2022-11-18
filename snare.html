@@ -23,58 +23,12 @@
   </head>
 
   <body>
-    <button id="record-button">Record: off</button>
-    <button id="record-play">Play</button>
     <div id="main" class="main">
       <div class="snare" id="snare"></div>
 
       <audio
         id="C"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668646643698"
-      ></audio>
-      <audio
-        id="Db"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Db.mp3?v=1668646658424"
-      ></audio>
-      <audio
-        id="D"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/D.mp3?v=1668646656583"
-      ></audio>
-      <audio
-        id="Eb"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Eb.mp3?v=1668646665661"
-      ></audio>
-      <audio
-        id="E"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/E.mp3?v=1668646661569"
-      ></audio>
-      <audio
-        id="F"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/F.mp3?v=1668646667543"
-      ></audio>
-      <audio
-        id="Gb"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Gb.mp3?v=1668646670405"
-      ></audio>
-      <audio
-        id="G"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/G.mp3?v=1668646668876"
-      ></audio>
-      <audio
-        id="Ab"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Ab.mp3?v=1668646648995"
-      ></audio>
-      <audio
-        id="A"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668646643698"
-      ></audio>
-      <audio
-        id="Bb"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Bb.mp3?v=1668646652265"
-      ></audio>
-      <audio
-        id="B"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668646650319"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
       ></audio>
     </div>
     <script>
@@ -98,6 +52,7 @@
 
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
       const BLACK_KEYS = ["s", "d", "g", "h", "j"];
+      const DRUM_KEY = "d";
 
       const keys = document.querySelectorAll(".key");
       const whiteKeys = document.querySelectorAll(".key.white");
@@ -163,13 +118,6 @@
       function sleep(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
-
-      const piano =
-        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995";
-      const snare =
-        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
-      const tambourine =
-        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
 
       //figure out who this client is, this is for styling in the chatting application
       var me;

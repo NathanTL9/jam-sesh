@@ -169,6 +169,10 @@
 
         if (recording) {
           recordedNotes.push(data);
+          if (recordedNotes.length > 0) {
+            recordedTimes.push(Date.now() - lastTime);
+          }
+          lastTime = Date.now();
         }
 
         socket.emit("key", data);
@@ -188,6 +192,7 @@
             document.getElementById("record-button").innerHTML = "Record: off";
           } else {
             document.getElementById("record-button").innerHTML = "Record: on";
+            recordedTimes.push(Date.now() - lastTime);
           }
           recording = !recording;
         });
@@ -224,8 +229,6 @@
       }
 
       async function playRecording() {
-        //const myWorker = new Worker("looper.js");
-        //myWorker.postMessage(recordedNotes);
         let currentNote = 0;
         while (playingRecording) {
           if (recordedNotes[currentNote].whiteKeyIndex > -1) {
@@ -238,7 +241,7 @@
           if (currentNote >= recordedNotes.length) {
             currentNote = 0;
           }
-          await sleep(500);
+          await sleep(recordedTimes[currentNote]);
         }
       }
 
@@ -258,8 +261,10 @@
       var address = window.location.href;
       var who = address.substring(address.lastIndexOf("/") + 1);
       var recordedNotes = [];
+      var recordedTimes = [];
       var playingRecording = false;
       var recording = false;
+      var lastTime = Date.now();
 
       if (who === "piano") {
         console.log("piano");
