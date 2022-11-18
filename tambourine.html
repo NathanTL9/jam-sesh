@@ -12,19 +12,19 @@
       }
 
       .main {
-        // background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.png?v=1668723914291");
         background-color: grey;
         align-items: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-position: center;
         object-fit: contain;
-      }ccv
-      .img {
+      }
+      ccv .img {
         display: grid;
         height: 100%;
       }
       .center-img {
+        float: center;
         max-width: 80%;
         max-height: 80vh;
         margin: auto;
@@ -72,24 +72,58 @@
         id="snare_sound"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
       ></audio>
-      <audio id="piano_sound" src=""></audio>
+      <audio
+        id="z"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257"
+      ></audio>
+      <audio
+        id="s"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Db.mp3?v=1668737748784"
+      ></audio>
+      <audio
+        id="x"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/D.mp3?v=1668737747570"
+      ></audio>
+      <audio
+        id="d"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Eb.mp3?v=1668737751209"
+      ></audio>
+      <audio
+        id="c"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/E.mp3?v=1668737749979"
+      ></audio>
+      <audio
+        id="v"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/F.mp3?v=1668737752455"
+      ></audio>
+      <audio
+        id="g"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Gb.mp3?v=1668737754977"
+      ></audio>
+      <audio
+        id="b"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/G.mp3?v=1668737753716"
+      ></audio>
+      <audio
+        id="h"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Ab.mp3?v=1668737757406"
+      ></audio>
+      <audio
+        id="n"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668737756198"
+      ></audio>
+      <audio
+        id="j"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Bb.mp3?v=1668737759810"
+      ></audio>
+      <audio
+        id="m"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668737758611"
+      ></audio>
     </div>
     <script>
       const KEYS = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m"];
-      const piano_source = [
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Db.mp3?v=1668737748784",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/D.mp3?v=1668737747570",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Eb.mp3?v=1668737751209",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/E.mp3?v=1668737749979",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/F.mp3?v=1668737752455",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Gb.mp3?v=1668737754977",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/G.mp3?v=1668737753716",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Ab.mp3?v=1668737757406",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668737756198",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Bb.mp3?v=1668737759810",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668737758611",
-      ];
+      
       //init socket
       var socket = io();
 
@@ -108,10 +142,8 @@
           socket.emit("tambourine", data);
           console.log("sending: " + key);
         }
-        
       });
-      
-      
+
       function playTambourine() {
         const noteAudio = document.getElementById("tambourine_sound");
         noteAudio.currentTime = 0;
@@ -122,24 +154,22 @@
       socket.on("key", (d) => {
         const keyIndex = KEYS.indexOf(d.key);
         console.log("receiving: " + d.key);
-        console.log("index: " + piano_source[keyIndex]);
-        piano(piano_source[keyIndex]);
+        piano(d.key);
       });
-      
+
       socket.on("snare", (d) => {
         console.log("receiving: " + d.key);
         playSnare();
       });
 
       function piano(key) {
-        const noteAudio = document.getElementById("piano_sound");
-        noteAudio.src = key;
+        const noteAudio = document.getElementById(key);
         console.log("source: " + noteAudio.src);
         noteAudio.load();
         noteAudio.currentTime = 0;
         noteAudio.play();
       }
-      
+
       function playSnare() {
         const noteAudio = document.getElementById("snare_sound");
         noteAudio.currentTime = 0;

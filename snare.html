@@ -12,7 +12,7 @@
       }
 
       .main {
-        background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.png?v=1668725317989");
+        //background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.png?v=1668725317989");
         background-color: grey;
         align-items: center;
         background-repeat: no-repeat;
@@ -39,6 +39,15 @@
       .snare_button {
         text-align: center;
       }
+      ccv .img {
+        display: grid;
+        height: 100%;
+      }
+      .center-img {
+        max-width: 80%;
+        max-height: 80vh;
+        margin: auto;
+      }
     </style>
   </head>
 
@@ -49,6 +58,12 @@
           <h1>Click g to play the snare</h1>
         </div>
       </div>
+      <div class="img">
+        <img
+          class="center-img"
+          src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.png?v=1668725317989"
+        />
+      </div>
 
       <audio
         id="snare_sound"
@@ -58,8 +73,8 @@
         id="tambourine_sound"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.wav?v=1668732911308"
       ></audio>
-      
-            <audio
+
+      <audio
         id="z"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257"
       ></audio>
@@ -129,7 +144,6 @@
           socket.emit("snare", data);
           console.log("sending: " + key);
         }
-        
       });
 
       function playSnare() {
@@ -142,24 +156,22 @@
       socket.on("key", (d) => {
         const keyIndex = KEYS.indexOf(d.key);
         console.log("receiving: " + d.key);
-        console.log("index: " + piano_source[keyIndex]);
-        piano(piano_source[keyIndex], d.key);
+        piano(d.key);
       });
-      
+
       socket.on("tambourine", (d) => {
         console.log("receiving: " + d.key);
         playTambourine();
       });
-      
+
       function playTambourine() {
         const noteAudio = document.getElementById("tambourine_sound");
         noteAudio.currentTime = 0;
         noteAudio.play();
       }
 
-      function piano(source, key) {
+      function piano(key) {
         const noteAudio = document.getElementById(key);
-        noteAudio.src = source;
         console.log("source: " + noteAudio.src);
         noteAudio.load();
         noteAudio.currentTime = 0;
