@@ -226,9 +226,15 @@
         .addEventListener("click", (e) => {
           if (recording) {
             document.getElementById("record-button").innerHTML = "Record: off";
+            recordedTimes.push(Date.now() - lastTime);
           } else {
             document.getElementById("record-button").innerHTML = "Record: on";
-            recordedTimes.push(Date.now() - lastTime);
+            recordedNotes = [];
+            recordedSnare = [];
+            recordedTambourine = [];
+            recordedTimes = [];
+            recordedTimesSnare = [];
+            recordedTimesTambourine = [];
           }
           recording = !recording;
         });
