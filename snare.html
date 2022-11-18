@@ -14,12 +14,11 @@
       .main {
         background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.png?v=1668725317989");
         background-color: grey;
-        display: flex;
         align-items: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-position: center;
-        min-height: 50px;
+        min-height: 750px;
         min-width: 50px;
       }
 
@@ -37,7 +36,9 @@
       .white.active {
         background-color: #ccc;
       }
-
+      .snare_button {
+        text-align: center;
+      }
     </style>
   </head>
 
@@ -45,7 +46,7 @@
     <div id="main" class="main">
       <div class="snare" id="snare">
         <div data-note="snare_sound" class="snare_button">
-          <p>Click g to play the snare</p>
+          <h1>Click g to play the snare</h1>
         </div>
       </div>
 
@@ -86,6 +87,8 @@
         };
         if (key == "g") {
           playSnare();
+          socket.emit("snare", data);
+          console.log("sending: " + key);
         }
       });
 

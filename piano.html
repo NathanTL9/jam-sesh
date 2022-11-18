@@ -81,6 +81,11 @@
       </div>
 
       <audio
+        id="snare_sound"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
+      ></audio>
+
+      <audio
         id="C"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257"
       ></audio>
@@ -146,6 +151,11 @@
         if (d.blackKeyIndex > -1) {
           otherNote(blackKeys[d.blackKeyIndex]);
         }
+      });
+      
+      socket.on("snare", (d) => {
+        console.log("recieving: " + d.key);
+        playSnare();
       });
 
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
@@ -229,6 +239,12 @@
         });
       }
 
+      function playSnare() {
+        const noteAudio = document.getElementById("snare_sound");
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+      }
+
       async function playRecording() {
         let currentNote = 0;
         while (playingRecording) {
@@ -283,7 +299,7 @@
       }
       if (who === "tambourine") {
         console.log("tambourine");
-        var element = document.getElementById('piano');
+        var element = document.getElementById("piano");
         element.style.display = "none";
         me = {
           id: "tambourine",
