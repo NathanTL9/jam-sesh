@@ -54,6 +54,10 @@
         id="snare_sound"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
       ></audio>
+      <audio
+        id="tambourine_sound"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.wav?v=1668732911308"
+      ></audio>
       
             <audio
         id="z"
@@ -140,6 +144,17 @@
         console.log("index: " + piano_source[keyIndex]);
         piano(piano_source[keyIndex], d.key);
       });
+      
+      socket.on("tambourine", (d) => {
+        console.log("receiving: " + d.key);
+        playTambourine();
+      });
+      
+      function playTambourine() {
+        const noteAudio = document.getElementById("tambourine_sound");
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+      }
 
       function piano(source, key) {
         const noteAudio = document.getElementById(key);

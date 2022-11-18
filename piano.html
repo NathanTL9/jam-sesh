@@ -84,6 +84,10 @@
         id="snare_sound"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
       ></audio>
+      <audio
+        id="tambourine_sound"
+        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.wav?v=1668732911308"
+      ></audio>
 
       <audio
         id="C"
@@ -154,9 +158,15 @@
       });
       
       socket.on("snare", (d) => {
-        console.log("recieving: " + d.key);
+        console.log("receiving: " + d.key);
         playSnare();
       });
+      
+      socket.on("tambourine", (d) => {
+        console.log("receiving: " + d.key);
+        playTambourine();
+      });
+
 
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
       const BLACK_KEYS = ["s", "d", "g", "h", "j"];
@@ -241,6 +251,12 @@
 
       function playSnare() {
         const noteAudio = document.getElementById("snare_sound");
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+      }
+      
+      function playTambourine() {
+        const noteAudio = document.getElementById("tambourine_sound");
         noteAudio.currentTime = 0;
         noteAudio.play();
       }
