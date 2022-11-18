@@ -12,25 +12,23 @@
       }
 
       .main {
-       // background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.png?v=1668723914291");
+        // background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.png?v=1668723914291");
         background-color: grey;
         align-items: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
         background-position: center;
         object-fit: contain;
-
-   
+      }ccv
+      .img {
+        display: grid;
+        height: 100%;
       }
-              .imgbox {
-            display: grid;
-            height: 100%;
-        }
-        .center-fit {
-            max-width: 100%;
-            max-height: 100vh;
-            margin: auto;
-        }
+      .center-img {
+        max-width: 80%;
+        max-height: 80vh;
+        margin: auto;
+      }
 
       .key {
         height: calc(var(--width) * 4);
@@ -59,9 +57,12 @@
           <h1>Click a to play the Tambourine</h1>
         </div>
       </div>
-      <div class="imgbox">
-    <img class="center-fit" src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.png?v=1668723914291">
-</div>
+      <div class="img">
+        <img
+          class="center-img"
+          src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/tambourine.png?v=1668723914291"
+        />
+      </div>
 
       <audio
         id="tambourine_sound"
