@@ -30,8 +30,8 @@
         id="snare_sound"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
       ></audio>
-
-
+      <audio id="piano_sound" src=""></audio>
+    </div>
     <script>
       const KEYS = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m"];
       const piano_source = [
@@ -46,8 +46,7 @@
         "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Ab.mp3?v=1668737757406",
         "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668737756198",
         "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Bb.mp3?v=1668737759810",
-        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668737758611"
-        
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668737758611",
       ];
       //init socket
       var socket = io();
@@ -57,21 +56,19 @@
 
       //when a text is recieved...
       socket.on("key", (d) => {
+        const keyIndex = KEYS.indexOf(d.key);
         console.log("receiving: " + d.key);
-
-        if (d.whiteKeyIndex > -1) {
-          piano(whiteKeys[d.whiteKeyIndex]);
-        }
+        piano(piano_source[keyIndex]);
       });
 
-      const key = e.key;
-      const whiteKeyIndex = KEYS.indexOf(key);
-
       function piano(key) {
-        const noteAudio = document.getElementById(key.dataset.note);
+        const noteAudio = document.getElementById(piano_sound);
+        noteAudio.src = key;
+        noteAudio.load();
         noteAudio.currentTime = 0;
         noteAudio.play();
       }
+
       //figure out who this client is, this is for styling in the chatting application
       var me;
       var address = window.location.href;
