@@ -162,7 +162,7 @@
         playSnare();
         if (recording) {
           if (recordedSnare.length > 0) {
-            recordedTimes.push(Date.now() - lastTime);
+            recordedTimesSnare.push(Date.now() - lastTime);
             console.log("Time: " + (Date.now() - lastTime));
           }
           recordedSnare.push(d);
@@ -175,7 +175,7 @@
         playTambourine();
         if (recording) {
           if (recordedTambourine.length > 0) {
-            recordedTimes.push(Date.now() - lastTime);
+            recordedTimesTambourine.push(Date.now() - lastTime);
             console.log("Time: " + (Date.now() - lastTime));
           }
           recordedTambourine.push(d);
@@ -282,7 +282,7 @@
         let tambourineNote = 0;
         while (playingRecording) {
           if (
-            currentNote <= recordedNotes.length &&
+            currentNote < recordedNotes.length &&
             !(recordedNotes.length === 0)
           ) {
             if (recordedNotes[currentNote].whiteKeyIndex > -1) {
@@ -296,28 +296,63 @@
             currentNote = 0;
           }
           if (
-            tambourineNote <= recordedTambourine.length &&
+            tambourineNote < recordedTambourine.length &&
             !(recordedTambourine.length === 0)
           ) {
-            if (recordedTambourine[currentNote].key == "a") {
+            if (recordedTambourine[tambourineNote].key == "a") {
               playTambourine();
-              tambourineNote++;
             }
+            tambourineNote++;
           } else {
             tambourineNote = 0;
           }
           if (
-            snareNote <= recordedSnare.length &&
+            snareNote < recordedSnare.length &&
             !(recordedSnare.length === 0)
           ) {
-            if (recordedSnare[currentNote].key == "l") {
+            if (recordedSnare[snareNote].key == "l") {
               playSnare();
-              snareNote++;
             }
+            snareNote++;
           } else {
             snareNote = 0;
           }
           await sleep(recordedTimes[currentNote]);
+        }
+      }
+
+      async function playRecordingSnare() {
+        let snareNote = 0;
+        while (playingRecording) {
+          if (
+            snareNote < recordedSnare.length &&
+            !(recordedSnare.length === 0)
+          ) {
+            if (recordedSnare[snareNote].key == "l") {
+              playSnare();
+            }
+            snareNote++;
+          } else {
+            snareNote = 0;
+          }
+          await sleep(recordedTimesSnare[snareNote]);
+        }
+      }
+
+      async function playRecordingSnare() {
+        let tambourineNote = 0;
+          if (
+            tambourineNote < recordedTambourine.length &&
+            !(recordedTambourine.length === 0)
+          ) {
+            if (recordedTambourine[tambourineNote].key == "a") {
+              playTambourine();
+            }
+            tambourineNote++;
+          } else {
+            tambourineNote = 0;
+          }
+          await sleep(recordedTimesTambourine[tambourineNote]);
         }
       }
 
@@ -340,6 +375,8 @@
       var recordedSnare = [];
       var recordedTambourine = [];
       var recordedTimes = [];
+      var recordedTimesSnare = [];
+      var recordedTimesTambourine = [];
       var playingRecording = false;
       var recording = false;
       var lastTime = Date.now();
