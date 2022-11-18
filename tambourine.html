@@ -108,7 +108,10 @@
           socket.emit("tambourine", data);
           console.log("sending: " + key);
         }
+        
       });
+      
+      
 
       function playTambourine() {
         const noteAudio = document.getElementById("tambourine_sound");
@@ -123,12 +126,23 @@
         console.log("index: " + piano_source[keyIndex]);
         piano(piano_source[keyIndex]);
       });
+      
+      socket.on("snare", (d) => {
+        console.log("receiving: " + d.key);
+        playSnare();
+      });
 
       function piano(key) {
         const noteAudio = document.getElementById("piano_sound");
         noteAudio.src = key;
         console.log("source: " + noteAudio.src);
         noteAudio.load();
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+      }
+      
+      function playSnare() {
+        const noteAudio = document.getElementById("snare_sound");
         noteAudio.currentTime = 0;
         noteAudio.play();
       }
