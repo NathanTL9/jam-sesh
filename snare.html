@@ -30,59 +30,25 @@
         id="snare_sound"
         src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.wav?v=1668732205484"
       ></audio>
-      
 
-      <audio
-        id="C"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257"
-      ></audio>
-      <audio
-        id="Db"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Db.mp3?v=1668737748784"
-      ></audio>
-      <audio
-        id="D"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/D.mp3?v=1668737747570"
-      ></audio>
-      <audio
-        id="Eb"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Eb.mp3?v=1668737751209"
-      ></audio>
-      <audio
-        id="E"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/E.mp3?v=1668737749979"
-      ></audio>
-      <audio
-        id="F"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/F.mp3?v=1668737752455"
-      ></audio>
-      <audio
-        id="Gb"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Gb.mp3?v=1668737754977"
-      ></audio>
-      <audio
-        id="G"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/G.mp3?v=1668737753716"
-      ></audio>
-      <audio
-        id="Ab"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Ab.mp3?v=1668737757406"
-      ></audio>
-      <audio
-        id="A"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668737756198"
-      ></audio>
-      <audio
-        id="Bb"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Bb.mp3?v=1668737759810"
-      ></audio>
-      <audio
-        id="B"
-        src="https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668737758611"
-      ></audio>
-    </div>
 
     <script>
+      const KEYS = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m"];
+      const piano_source = [
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Db.mp3?v=1668737748784",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/D.mp3?v=1668737747570",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Eb.mp3?v=1668737751209",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/E.mp3?v=1668737749979",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/F.mp3?v=1668737752455",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Gb.mp3?v=1668737754977",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/G.mp3?v=1668737753716",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Ab.mp3?v=1668737757406",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/A.mp3?v=1668737756198",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/Bb.mp3?v=1668737759810",
+        "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/B.mp3?v=1668737758611"
+        
+      ];
       //init socket
       var socket = io();
 
@@ -96,17 +62,10 @@
         if (d.whiteKeyIndex > -1) {
           piano(whiteKeys[d.whiteKeyIndex]);
         }
-        if (d.blackKeyIndex > -1) {
-          piano(blackKeys[d.blackKeyIndex]);
-        }
       });
-      
-      const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
-      const BLACK_KEYS = ["s", "d", "g", "h", "j"];
-      
+
       const key = e.key;
-      const whiteKeyIndex = WHITE_KEYS.indexOf(key);
-      const blackKeyIndex = BLACK_KEYS.indexOf(key);
+      const whiteKeyIndex = KEYS.indexOf(key);
 
       function piano(key) {
         const noteAudio = document.getElementById(key.dataset.note);
