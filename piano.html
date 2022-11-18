@@ -156,17 +156,32 @@
           otherNote(blackKeys[d.blackKeyIndex]);
         }
       });
-      
+
       socket.on("snare", (d) => {
         console.log("receiving: " + d.key);
         playSnare();
+        if (recording) {
+          if (recordedNotes.length > 0) {
+            recordedTimes.push(Date.now() - lastTime);
+            console.log("Time: " + (Date.now() - lastTime));
+          }
+          recordedNotes.push(d);
+          lastTime = Date.now();
+        }
       });
-      
+
       socket.on("tambourine", (d) => {
         console.log("receiving: " + d.key);
         playTambourine();
+        if (recording) {
+          if (recordedNotes.length > 0) {
+            recordedTimes.push(Date.now() - lastTime);
+            console.log("Time: " + (Date.now() - lastTime));
+          }
+          recordedNotes.push(d);
+          lastTime = Date.now();
+        }
       });
-
 
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
       const BLACK_KEYS = ["s", "d", "g", "h", "j"];
@@ -254,7 +269,7 @@
         noteAudio.currentTime = 0;
         noteAudio.play();
       }
-      
+
       function playTambourine() {
         const noteAudio = document.getElementById("tambourine_sound");
         noteAudio.currentTime = 0;
@@ -270,6 +285,13 @@
           if (recordedNotes[currentNote].blackKeyIndex > -1) {
             playNote(blackKeys[recordedNotes[currentNote].blackKeyIndex]);
           }
+          if (recordedNotes[currentNote].key == "a") {
+            playTambourine();
+          }
+          if (recordedNotes[currentNote].key == "g") {
+            playSnare();
+          }
+
           currentNote++;
           if (currentNote >= recordedNotes.length) {
             currentNote = 0;
