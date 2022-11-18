@@ -166,11 +166,11 @@
           whiteKeyIndex: whiteKeyIndex,
           blackKeyIndex: blackKeyIndex,
         };
-        
+
         if (recording) {
           recordedNotes.push(data);
         }
-        
+
         socket.emit("key", data);
         console.log("sending: " + key);
         if (whiteKeyIndex > -1) {
@@ -241,14 +241,16 @@
           await sleep(500);
         }
       }
-        
+
       function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        return new Promise((resolve) => setTimeout(resolve, ms));
       }
 
-      const student =
+      const piano =
         "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995";
-      const instructor =
+      const snare =
+        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
+      const tambourine =
         "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
 
       //figure out who this client is, this is for styling in the chatting application
@@ -258,15 +260,22 @@
       var recordedNotes = [];
       var playingRecording = false;
       var recording = false;
-      if (who === "instructor") {
+
+      if (who === "piano") {
         me = {
-          id: "instructor",
-          img: instructor,
+          id: "piano",
+          img: piano,
+        };
+      }
+      if (who === "snare") {
+        me = {
+          id: "snare",
+          img: snare,
         };
       } else {
         me = {
-          id: "student",
-          img: student,
+          id: "tambourine",
+          img: tambourine,
         };
       }
     </script>

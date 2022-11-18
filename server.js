@@ -20,12 +20,7 @@ there's a lot more network security magic that goes on in the background in thso
 */
 
 
-app.get('/student', (req, res) => {               //user = ame
-    res.sendFile(__dirname + '/index.html');
-});
-
-
-app.get('/instructor', (req, res) => {              //user = gura
+app.get('/piano', (req, res) => {              //user = gura
     res.sendFile(__dirname + '/index.html');
 });
 
