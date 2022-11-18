@@ -40,7 +40,7 @@
 
       //when a text is recieved...
       socket.on("key", (d) => {
-        console.log("recieving: " + d.key);
+        console.log("receiving: " + d.key);
 
         if (d.whiteKeyIndex > -1) {
           piano(whiteKeys[d.whiteKeyIndex]);
@@ -52,7 +52,7 @@
 
       const WHITE_KEYS = ["z", "x", "c", "v", "b", "n", "m"];
       const BLACK_KEYS = ["s", "d", "g", "h", "j"];
-      const DRUM_KEY = "d";
+      const DRUM_KEY = "a";
 
       const keys = document.querySelectorAll(".key");
       const whiteKeys = document.querySelectorAll(".key.white");

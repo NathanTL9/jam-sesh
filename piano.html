@@ -168,10 +168,11 @@
         };
 
         if (recording) {
-          recordedNotes.push(data);
           if (recordedNotes.length > 0) {
             recordedTimes.push(Date.now() - lastTime);
+            console.log("Time: " + (Date.now() - lastTime));
           }
+          recordedNotes.push(data);
           lastTime = Date.now();
         }
 
