@@ -241,6 +241,8 @@
           document.getElementById("record-play").innerHTML = "Pause";
           playingRecording = !playingRecording;
           playRecording();
+          playRecordingSnare();
+          playRecordingTambourine();
         }
       });
 
@@ -278,8 +280,6 @@
 
       async function playRecording() {
         let currentNote = 0;
-        let snareNote = 0;
-        let tambourineNote = 0;
         while (playingRecording) {
           if (
             currentNote < recordedNotes.length &&
@@ -294,28 +294,6 @@
             currentNote++;
           } else {
             currentNote = 0;
-          }
-          if (
-            tambourineNote < recordedTambourine.length &&
-            !(recordedTambourine.length === 0)
-          ) {
-            if (recordedTambourine[tambourineNote].key == "a") {
-              playTambourine();
-            }
-            tambourineNote++;
-          } else {
-            tambourineNote = 0;
-          }
-          if (
-            snareNote < recordedSnare.length &&
-            !(recordedSnare.length === 0)
-          ) {
-            if (recordedSnare[snareNote].key == "l") {
-              playSnare();
-            }
-            snareNote++;
-          } else {
-            snareNote = 0;
           }
           await sleep(recordedTimes[currentNote]);
         }
@@ -339,8 +317,9 @@
         }
       }
 
-      async function playRecordingSnare() {
+      async function playRecordingTambourine() {
         let tambourineNote = 0;
+        while (playingRecording) {
           if (
             tambourineNote < recordedTambourine.length &&
             !(recordedTambourine.length === 0)
@@ -360,13 +339,6 @@
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
 
-      const piano =
-        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2Fdownload.jpg?v=1638296175995";
-      const snare =
-        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
-      const tambourine =
-        "https://cdn.glitch.me/79cb0af8-289f-4799-9190-fc33be9edede%2F7bc0dee81fff44819463baea6d7e3c2c.jpg?v=1638296153357";
-
       //figure out who this client is, this is for styling in the chatting application
       var me;
       var address = window.location.href;
@@ -385,14 +357,12 @@
         console.log("piano");
         me = {
           id: "piano",
-          img: piano,
         };
       }
       if (who === "snare") {
         console.log("snare");
         me = {
           id: "snare",
-          img: snare,
         };
       }
       if (who === "tambourine") {
@@ -401,7 +371,6 @@
         element.style.display = "none";
         me = {
           id: "tambourine",
-          img: tambourine,
         };
       }
     </script>
