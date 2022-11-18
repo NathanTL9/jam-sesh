@@ -65,7 +65,7 @@
     <button id="record-button">Record: off</button>
     <button id="record-play">Play</button>
     <div id="main" class="main">
-      <div class="piano">
+      <div class="piano" id="piano">
         <div data-note="C" class="key white"></div>
         <div data-note="Db" class="key black"></div>
         <div data-note="D" class="key white"></div>
@@ -262,17 +262,23 @@
       var recording = false;
 
       if (who === "piano") {
+        console.log("piano");
         me = {
           id: "piano",
           img: piano,
         };
       }
       if (who === "snare") {
+        console.log("snare");
         me = {
           id: "snare",
           img: snare,
         };
-      } else {
+      }
+      if (who === "tambourine") {
+        console.log("tambourine");
+        var element = document.getElementById('piano');
+        element.style.display = "none";
         me = {
           id: "tambourine",
           img: tambourine,
