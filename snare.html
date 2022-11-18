@@ -19,12 +19,29 @@
         justify-content: center;
         align-items: center;
       }
+
+      .key {
+        height: calc(var(--width) * 4);
+        width: var(--width);
+      }
+
+      .white {
+        --width: 100px;
+        background-color: white;
+        border: 1px solid #333;
+      }
+
+      .white.active {
+        background-color: #ccc;
+      }
     </style>
   </head>
 
   <body>
     <div id="main" class="main">
-      <div class="snare" id="snare"></div>
+      <div class="snare" id="snare">
+        <div data-note="snare_sound" class="key white"></div>
+      </div>
 
       <audio
         id="snare_sound"
@@ -53,17 +70,38 @@
 
       //connect to your server address
       socket.connect("https://collaborative-piano.glitch.me/:3000");
+      
+      document.addEventListener("keydown", (snare) => {
+        if (snare.repeat) return;
+        const key = snare.key;
 
+        var data = {
+          key: key,
+        };
+      }
+      function playNote(key) {
+        const noteAudio = document.getElementById(key.dataset.note);
+        noteAudio.currentTime = 0;
+        noteAudio.play();
+        key.classList.add("active");
+        noteAudio.addEventListener("ended", () => {
+          key.classList.remove("active");
+        });
+      }
+      
       //when a text is recieved...
       socket.on("key", (d) => {
         const keyIndex = KEYS.indexOf(d.key);
         console.log("receiving: " + d.key);
+        console.log("index: " + piano_source[keyIndex]);
         piano(piano_source[keyIndex]);
       });
 
+      
       function piano(key) {
-        const noteAudio = document.getElementById(piano_sound);
+        const noteAudio = document.getElementById("piano_sound");
         noteAudio.src = key;
+        console.log("source: " + noteAudio.src);
         noteAudio.load();
         noteAudio.currentTime = 0;
         noteAudio.play();
