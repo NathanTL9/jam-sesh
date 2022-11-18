@@ -21,15 +21,15 @@ there's a lot more network security magic that goes on in the background in thso
 
 
 app.get('/piano', (req, res) => {              //user = gura
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/piano.html');
 });
 
 app.get('/snare', (req, res) => {              //user = snare
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/snare.html');
 });
 
 app.get('/tambourine', (req, res) => {              //user = tambourine
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/tambourine.html');
 });
 
 // connect the server to port 3000
