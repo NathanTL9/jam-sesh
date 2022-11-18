@@ -12,12 +12,15 @@
       }
 
       .main {
+        background-image: url("https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.png?v=1668725317989");
         background-color: grey;
-        margin: 0;
-        min-height: 100vh;
         display: flex;
-        justify-content: center;
         align-items: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        min-height: 50px;
+        min-width: 50px;
       }
 
       .key {
@@ -35,18 +38,15 @@
         background-color: #ccc;
       }
 
-      .snare_button {
-        background: url()"https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/snare.png?v=1668725317989";
-        height: 400px;
-        width: 100%;
-      }
     </style>
   </head>
 
   <body>
     <div id="main" class="main">
       <div class="snare" id="snare">
-        <div data-note="snare_sound" class="snare_button"></div>
+        <div data-note="snare_sound" class="snare_button">
+          <p>Click g to play the snare</p>
+        </div>
       </div>
 
       <audio
@@ -56,7 +56,6 @@
       <audio id="piano_sound" src=""></audio>
     </div>
     <script>
-      
       const KEYS = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m"];
       const piano_source = [
         "https://cdn.glitch.global/1ea1ca4a-613c-41b7-9fdc-6415548f138f/C.mp3?v=1668737746257",
@@ -125,23 +124,18 @@
         console.log("piano");
         me = {
           id: "piano",
-          img: piano,
         };
       }
       if (who === "snare") {
         console.log("snare");
         me = {
           id: "snare",
-          img: snare,
         };
       }
       if (who === "tambourine") {
         console.log("tambourine");
-        var element = document.getElementById("piano");
-        element.style.display = "none";
         me = {
           id: "tambourine",
-          img: tambourine,
         };
       }
     </script>
