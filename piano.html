@@ -161,11 +161,11 @@
         console.log("receiving: " + d.key);
         playSnare();
         if (recording) {
-          if (recordedNotes.length > 0) {
+          if (recordedSnare.length > 0) {
             recordedTimes.push(Date.now() - lastTime);
             console.log("Time: " + (Date.now() - lastTime));
           }
-          recordedNotes.push(d);
+          recordedSnare.push(d);
           lastTime = Date.now();
         }
       });
@@ -174,11 +174,11 @@
         console.log("receiving: " + d.key);
         playTambourine();
         if (recording) {
-          if (recordedNotes.length > 0) {
+          if (recordedTambourine.length > 0) {
             recordedTimes.push(Date.now() - lastTime);
             console.log("Time: " + (Date.now() - lastTime));
           }
-          recordedNotes.push(d);
+          recordedTambourine.push(d);
           lastTime = Date.now();
         }
       });
@@ -279,16 +279,19 @@
       async function playRecording() {
         let currentNote = 0;
         while (playingRecording) {
+          if (currentNote >= recordedNotes.length) {
+            currentNote = 0;
+          }
           if (recordedNotes[currentNote].whiteKeyIndex > -1) {
             playNote(whiteKeys[recordedNotes[currentNote].whiteKeyIndex]);
           }
           if (recordedNotes[currentNote].blackKeyIndex > -1) {
             playNote(blackKeys[recordedNotes[currentNote].blackKeyIndex]);
           }
-          if (recordedNotes[currentNote].key == "a") {
+          if (recordedTambourine[currentNote].key == "a") {
             playTambourine();
           }
-          if (recordedNotes[currentNote].key == "g") {
+          if (recordedSnare[currentNote].key == "l") {
             playSnare();
           }
 
@@ -316,6 +319,8 @@
       var address = window.location.href;
       var who = address.substring(address.lastIndexOf("/") + 1);
       var recordedNotes = [];
+      var recordedSnare = [];
+      var recordedTambourine = [];
       var recordedTimes = [];
       var playingRecording = false;
       var recording = false;

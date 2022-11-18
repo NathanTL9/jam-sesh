@@ -44,18 +44,21 @@
         height: 100%;
       }
       .center-img {
+        float: center;
         max-width: 80%;
         max-height: 80vh;
-        margin: auto;
+        margin-left: 25%;
       }
     </style>
   </head>
 
   <body>
+        <button id="record-button">Record: off</button>
+    <button id="record-play">Play</button>
     <div id="main" class="main">
       <div class="snare" id="snare">
         <div data-note="snare_sound" class="snare_button">
-          <h1>Click g to play the snare</h1>
+          <h1>Click l to play the snare</h1>
         </div>
       </div>
       <div class="img">
@@ -139,7 +142,7 @@
         var data = {
           key: key,
         };
-        if (key == "g") {
+        if (key == "l") {
           playSnare();
           socket.emit("snare", data);
           console.log("sending: " + key);

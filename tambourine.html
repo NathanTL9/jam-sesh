@@ -27,7 +27,7 @@
         float: center;
         max-width: 80%;
         max-height: 80vh;
-        margin: auto;
+        margin-left: 10%;
       }
 
       .key {
@@ -51,6 +51,8 @@
   </head>
 
   <body>
+    <button id="record-button">Record: off</button>
+    <button id="record-play">Play</button>
     <div id="main" class="main">
       <div class="tambourine" id="tambourine">
         <div data-note="tambourine_sound" class="tambourine_button">
@@ -123,7 +125,7 @@
     </div>
     <script>
       const KEYS = ["z", "s", "x", "d", "c", "v", "g", "b", "h", "n", "j", "m"];
-      
+
       //init socket
       var socket = io();
 
